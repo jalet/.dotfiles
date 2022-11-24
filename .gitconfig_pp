@@ -1,0 +1,12 @@
+[user]
+  name       = Joakim Jarsäter
+  email      = jjarsater@paypal.com
+
+[url "https://github.com"]
+  insteadof = ssh://git@github.com
+
+[url "https://github.com/"]
+  insteadof = git@github.com:
+
+[url "https://github.paypal.com"]
+  insteadof = ssh://git@github.paypal.com

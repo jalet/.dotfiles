@@ -1,0 +1,6 @@
+{
+    "$schema": "schema.json",
+    "Lua.diagnostics.globals": [
+        "vim"
+    ]
+}

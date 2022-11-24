@@ -1,0 +1,47 @@
+[core]
+  excludesfile = ~/.gitignore_global
+  editor       = /opt/homebrew/bin/nvim
+
+[init]
+  defaultBranch = main
+
+[push]
+  default = current
+
+[color]
+  ui = auto
+
+[alias]
+  st  = status
+  ls  = ls-files
+  co  = checkout
+  cob = checkout -b
+
+[commit]
+  gpgsign = true
+
+[pull]
+  rebase = true
+
+[credential "https://github.com"]
+  helper =
+  helper = !/opt/homebrew/bin/gh auth git-credential
+
+[credential "https://gist.github.com"]
+  helper =
+  helper = !/opt/homebrew/bin/gh auth git-credential
+
+[includeIf "gitdir:~/projects/"]
+  path = ~/.gitconfig_pp
+
+[includeIf "gitdir:~/personal/"]
+  path = ~/.gitconfig_me
+
+[includeIf "gitdir:~/.config/"]
+  path = ~/.gitconfig_me
+
+[includeIf "gitdir:~/.dotfiles/"]
+  path = ~/.gitconfig_me
+
+[user]
+  signingkey = ECB9FD1CA93D337C!
