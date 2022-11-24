@@ -1,0 +1,7 @@
+[user]
+  name = jalet
+  email = joakim@jarsater.com
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHYy2yTDVmKDDvLfCcB8JFj19rmz2xzSWSF6icvTk1lk
+
+[url "https://github.com/"]
+  insteadof = git@github.com:

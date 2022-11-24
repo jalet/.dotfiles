@@ -1,0 +1,13 @@
+[user]
+  name       = jalet-pp
+  email      = jjarsater@paypal.com
+  signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICtUqXe4blCoHPVs0WQnG9XofdGKr3b5krfuZlV7CU08
+
+[url "https://github.com"]
+  insteadof = ssh://git@github.com
+
+[url "https://github.com/"]
+  insteadof = git@github.com:
+
+[url "https://github.paypal.com"]
+  insteadof = ssh://git@github.paypal.com
