@@ -47,15 +47,17 @@ end
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
 local servers = {
-	"dockerls", -- docker
-	"jedi_language_server", -- python
-	"jsonls", -- json
-	"kotlin_language_server", -- kotlin
-	"sumneko_lua", -- lua
-	"terraformls", -- terraform
-	"tflint", -- terraform
-	"tsserver", -- typescript
-	"yamlls", -- yaml
+	"dockerls",
+	"jedi_language_server",
+	"jsonls",
+	"kotlin_language_server",
+	"sumneko_lua",
+	"terraformls",
+	"tflint",
+	"tsserver",
+	"yamlls",
+    "graphql",
+    "rome",
 }
 
 for _, lsp in ipairs(servers) do
