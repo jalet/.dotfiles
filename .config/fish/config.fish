@@ -24,7 +24,8 @@ starship init fish | source
 fish_add_path -g \
     /opt/homebrew/opt/curl/bin \
     ~/.asdf/shims \
-    ~/.local/share/nvim/mason/bin
+    ~/.local/share/nvim/mason/bin \
+    ~/.cargo/bin
 
 # -- ENV -----------------------------------------------------------------------
 
