@@ -1,91 +1,81 @@
-local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
-if not lspconfig_status_ok then
-	return
+local lsp_status_ok, lsp = pcall(require, "lsp-zero")
+if not lsp_status_ok then
+    return
 end
 
-local cmp_nvim_lsp_status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-if not cmp_nvim_lsp_status_ok then
-	return
-end
 
--- Add additional capabilities supported by nvim-cmp
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
--- Mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap = true, silent = true }
-
-vim.api.nvim_set_keymap("n", "[d", "<CMD>lua vim.diagnostic.goto_prev()<CR>", opts)
-vim.api.nvim_set_keymap("n", "]d", "<CMD>lua vim.diagnostic.goto_next()<CR>", opts)
-vim.api.nvim_set_keymap("n", "<Space>q", "<CMD>lua vim.diagnostic.setloclist()<CR>", opts)
-
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-	-- Disable LSP formatting since this is handled by null-ls
-	client.server_capabilities.documentFormattingProvider = false
-	client.server_capabilities.documentRangeFormattingProvider = false
-
-	-- Enable completion triggered by <c-x><c-o>
-	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-	-- Mappings.
-	-- See `:help vim.lsp.*` for documentation on any of the below functions
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<CMD>lua vim.lsp.buf.declaration()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<CMD>lua vim.lsp.buf.definition()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<CMD>lua vim.lsp.buf.hover()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<CMD>lua vim.lsp.buf.implementation()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<CMD>lua vim.lsp.buf.signature_help()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<Space>vd", "<CMD>lua vim.diagnostic.open_float()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<Space>D", "<CMD>lua vim.lsp.buf.type_definition()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<Space>rn", "<CMD>lua vim.lsp.buf.rename()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<Space>ca", "<CMD>lua vim.lsp.buf.code_action()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<CMD>lua vim.lsp.buf.references()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<Space>f", "<CMD>lua vim.lsp.buf.format({ async = true })<CR>", opts)
+local cmp_status_ok, cmp = pcall(require, "cmp")
+if not cmp_status_ok then
+    return
 end
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = {
-	"dockerls",
-	"jedi_language_server",
-	"jsonls",
-	"kotlin_language_server",
-	"sumneko_lua",
-	"terraformls",
-	"tflint",
-	"tsserver",
-	"yamlls",
+lsp.preset("recommended")
+lsp.ensure_installed({
+    "dockerls",
+    "jedi_language_server",
+    "jsonls",
+    "kotlin_language_server",
+    "sumneko_lua",
+    "terraformls",
+    "tflint",
+    "tsserver",
+    "yamlls",
     "graphql",
     "rome",
-}
+})
 
-for _, lsp in ipairs(servers) do
-	local settings = require("jj.lsp.settings." .. lsp)
 
-	lspconfig[lsp].setup({
-		capabilities = capabilities,
-		on_attach = on_attach,
-		settings = settings,
-	})
-end
+lsp.configure("sumneko_lua", {
+    settings = {
+        Lua = {
+            diagnostics = {
+                global = "vim"
+            }
+        }
+    }
+})
 
-local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
-if not rust_tools_status_ok then
-	return
-end
+local cmp_select = { behavior = cmp.SelectBehavior.Select }
+local cmp_mappings = lsp.defaults.cmp_mappings({
+    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+    ["<C-Space>"] = cmp.mapping.complete(),
+})
 
-rust_tools.setup({
-	tools = {
-		autoSetHints = true,
-		inlay_hints = {
-			show_parameter_hints = false,
-			parameter_hints_prefix = "",
-			other_hints_prefix = "",
-		},
-	},
 
-	server = {
-		standalone = true,
-	},
+lsp.set_preferences({
+    sign_icons = {
+        error = 'E',
+        warn = 'W',
+        hint = 'H',
+        info = 'I'
+    }
+})
+
+lsp.on_attach(function(client, bufnr)
+  local opts = {buffer = bufnr, remap = false}
+
+  if client.name == "eslint" then
+      vim.cmd.LspStop('eslint')
+      return
+  end
+
+  vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+  vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
+  vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
+  vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
+  vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
+  vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
+  vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
+  vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
+  vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+end)
+lsp.setup()
+
+vim.diagnostic.config({
+    virtual_text = true,
 })

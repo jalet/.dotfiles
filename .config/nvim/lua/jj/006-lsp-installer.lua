@@ -15,17 +15,3 @@ mason.setup({
 		},
 	},
 })
-
-mason_lspconfig.setup({
-	ensure_installed = {
-		"jdtls",
-		"rust_analyzer",
-		"sumneko_lua",
-		"terraformls",
-		"tflint",
-		"tsserver",
-        "graphql",
-        "kotlin_language_server",
-        "rome",
-	},
-})

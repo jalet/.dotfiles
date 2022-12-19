@@ -49,27 +49,21 @@ return packer.startup(function(use)
 	use("folke/tokyonight.nvim")
 	use("ellisonleao/gruvbox.nvim")
 
-	-- CMP
-	use("hrsh7th/nvim-cmp")
-	use("hrsh7th/cmp-nvim-lsp")
-	use("hrsh7th/cmp-buffer")
-	use("hrsh7th/cmp-path")
-	use("hrsh7th/cmp-calc")
-	use("onsails/lspkind.nvim")
-	use("saadparwaiz1/cmp_luasnip")
-	use({ "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" })
+    -- Zero
+    use({"VonHeikemen/lsp-zero.nvim", requires = {
+        -- LSP
+        {'neovim/nvim-lspconfig'},
+        {'williamboman/mason.nvim'},
+        {'williamboman/mason-lspconfig.nvim'},
 
-	-- Snippets
-	use("L3MON4D3/LuaSnip") --snippet engine
-
-	-- LSP
-	use("neovim/nvim-lspconfig") -- enable LSP
-	use("williamboman/mason.nvim")
-	use("williamboman/mason-lspconfig.nvim")
-	use("jose-elias-alvarez/null-ls.nvim") -- formatters and linters
-	use("simrat39/rust-tools.nvim") -- rust defaults
-	use("mfussenegger/nvim-jdtls") -- java
-
+        -- CMP
+        {'hrsh7th/nvim-cmp'},
+        {'hrsh7th/cmp-buffer'},
+        {'hrsh7th/cmp-path'},
+        {'saadparwaiz1/cmp_luasnip'},
+        {'hrsh7th/cmp-nvim-lsp'},
+        {'hrsh7th/cmp-nvim-lua'},
+    }})
 
     -- DAP and Testing
 	use("mfussenegger/nvim-dap")
@@ -83,17 +77,8 @@ return packer.startup(function(use)
 	use("lewis6991/gitsigns.nvim")
 	use({ "nvim-telescope/telescope.nvim", requires = { "nvim-lua/plenary.nvim" } })
 	use("RRethy/nvim-align")
-	use({ "kyazdani42/nvim-tree.lua", requires = { "kyazdani42/nvim-web-devicons" } })
-	use("folke/todo-comments.nvim")
-	use("folke/trouble.nvim")
 	use("mzlogin/vim-markdown-toc")
-	use({ "iamcco/markdown-preview.nvim", ft = "markdown", run = "cd app && yarn install" })
 	use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim", "sindrets/diffview.nvim" })
-	use("dhruvasagar/vim-table-mode")
-	use({
-		"nvim-lualine/lualine.nvim",
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
-	})
     use("mbbill/undotree")
 
 	-- Automatically set up your configuration after cloning packer.nvim
