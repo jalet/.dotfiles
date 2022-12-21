@@ -16,8 +16,6 @@ vim.g.maplocalleader = ' '
 --   term_mode         = "t",
 --   command_mode      = "c",
 
-fn("n", "<Leader>e", ":NvimTreeToggle<cr>", gopts)
-
 -- Window navigation
 fn("n", "<C-h>", "<C-w>h", gopts)
 fn("n", "<C-j>", "<C-w>j", gopts)

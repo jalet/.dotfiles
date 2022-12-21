@@ -43,6 +43,7 @@ set -gx APPLE_SSH_ADD_BEHAVIOR macos
 # -- ALIAS ---------------------------------------------------------------------
 
 alias cat="bat"
+alias n="nvim"
 alias vim="nvim"
 alias dco="docker-compose"
 alias dot="/opt/homebrew/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
