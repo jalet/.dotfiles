@@ -9,6 +9,7 @@ end
 # -- homebrew ------------------------------------------------------------------
 
 /opt/homebrew/bin/brew shellenv | source
+source /Users/jjarsater/.config/op/plugins.sh
 
 # -- Colors --------------------------------------------------------------------
 
