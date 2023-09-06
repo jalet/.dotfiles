@@ -1,14 +1,4 @@
-local lsp_status_ok, lsp = pcall(require, "lsp-zero")
-if not lsp_status_ok then
-    return
-end
-
-
-local rt_status_ok, rt = pcall(require, "rust-tools")
-if not rt_status_ok then
-    return
-end
-
+local lsp = require("lsp-zero")
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
 lsp.preset("recommended")
@@ -18,9 +8,8 @@ lsp.ensure_installed({
     "jedi_language_server",
     "jsonls",
     "kotlin_language_server",
-    "rome",
-    "rust_analyzer",
     "lua_ls",
+    "rust_analyzer",
     "terraformls",
     "tflint",
     "tsserver",
@@ -98,15 +87,6 @@ lsp.configure("yamlls", {
 })
 
 
-lsp.set_preferences({
-    sign_icons = {
-        error = 'E',
-        warn = 'W',
-        hint = 'H',
-        info = 'I'
-    }
-})
-
 lsp.on_attach(function(_, bufnr)
     lsp.default_keymaps({ buffer = bufnr })
 end)
@@ -115,6 +95,8 @@ lsp.nvim_workspace()
 lsp.setup()
 
 local cmp = require("cmp")
+local sel = { behaviour = cmp.SelectBehavior.Select }
+
 cmp.setup({
     sources = {
         { name = "nvim_lsp",               keyword_length = 3 },
@@ -123,10 +105,18 @@ cmp.setup({
         { name = "buffer",                 keyword_length = 2 },
         { name = "path" },
         { name = "spell" },
-        { name = "vsnip" },
         { name = "calc" },
+    },
+    mappings = {
+        ["<C-p>"] = cmp.mapping.select_prev_item(sel),
+        ["<C-n>"] = cmp.mapping.select_next_item(sel),
+        ["<C-y>"] = cmp.mapping.confirm({ select = true }),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<Tab>"] = nil,
+        ["<C-Tab>"] = nil,
     }
 })
+
 vim.diagnostic.config({
     virtual_text = true,
     signs = true,
@@ -134,29 +124,3 @@ vim.diagnostic.config({
     update_in_insert = true
 })
 
-local rustlsp = lsp.build_options("rust_analyzer", {
-    single_file_support = false,
-    on_attach = function(client, bufnr)
-        local set = function(mode, sequence, action)
-            vim.keymap.set(mode, sequence, action, { buffer = bufnr, remap = false })
-        end
-
-        on_attach(client, bufnr)
-        set("n", "K", rt.hover_actions.hover_actions)
-        set("n", "<leader>vca", rt.code_action_group.code_action_group)
-    end,
-})
-
-rt.setup({
-    server = rustlsp,
-    -- debugging stuff
-    dap = {
-        adapter = {
-            type = "executable",
-            command = "codelldb",
-            name = "rust",
-            port = 9229,
-        },
-    },
-})
-rt.runnables.runnables()
