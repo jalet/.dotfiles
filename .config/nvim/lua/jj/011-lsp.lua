@@ -4,11 +4,6 @@ if not lsp_status_ok then
 end
 
 
-local cmp_status_ok, cmp = pcall(require, "cmp")
-if not cmp_status_ok then
-    return
-end
-
 local rt_status_ok, rt = pcall(require, "rust-tools")
 if not rt_status_ok then
     return
@@ -33,7 +28,7 @@ lsp.ensure_installed({
 })
 
 -- We'll use rust-tools to setup the rust-analyzer
-lsp.skip_server_setup({ "rust_analyzer" })
+lsp.skip_server_setup({ "rust_analyzer", "jdtls", "eslint" })
 
 lsp.configure("lua_ls", {
     settings = {
@@ -45,8 +40,19 @@ lsp.configure("lua_ls", {
     }
 })
 
+lsp.configure("jsonls", {
+    settings = {
+        http = {
+            proxyStrictSSL = false
+        }
+    }
+})
+
 lsp.configure("yamlls", {
     settings = {
+        http = {
+            proxyStrictSSL = false
+        },
         yaml = {
             hover = true,
             completion = true,
@@ -92,53 +98,6 @@ lsp.configure("yamlls", {
 })
 
 
-local cmp_select = { behavior = cmp.SelectBehavior.Select }
-local cmp_mappings = lsp.defaults.cmp_mappings({
-    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-    ["<C-Space>"] = cmp.mapping.complete(),
-})
-
-local on_attach = function(client, bufnr)
-    local set = function(mode, sequence, action)
-        vim.keymap.set(mode, sequence, action, { buffer = bufnr, remap = false })
-    end
-
-    if client.name == "eslint" then
-        vim.cmd.LspStop('eslint')
-        return
-    end
-
-    set("n", "gd", vim.lsp.buf.definition)
-    set("n", "K", vim.lsp.buf.hover)
-    set("n", "F", ":LspZeroFormat<cr>")
-    set("n", "<leader>vws", vim.lsp.buf.workspace_symbol)
-    set("n", "<leader>vd", vim.diagnostic.open_float)
-    set("n", "[d", vim.diagnostic.goto_next)
-    set("n", "]d", vim.diagnostic.goto_prev)
-    set("n", "<leader>vca", vim.lsp.buf.code_action)
-    set("n", "<leader>vrr", vim.lsp.buf.references)
-    set("n", "<leader>vrn", vim.lsp.buf.rename)
-    set("i", "<C-h>", vim.lsp.buf.signature_help)
-end
-
-lsp.setup_nvim_cmp({
-    mapping = cmp_mappings,
-    sources = {
-        { name = 'path' },
-        { name = 'nvim_lsp',               keyword_length = 3 },
-        { name = 'nvim_lsp_signature_help' },
-        { name = 'nvim_lua',               keyword_length = 2 },
-        { name = 'buffer',                 keyword_length = 2 },
-        { name = "vsnip" },
-        { name = 'calc' },
-    },
-    completion = {
-        completeopt = 'menu,menuone,noinsert,noselect'
-    },
-})
-
 lsp.set_preferences({
     sign_icons = {
         error = 'E',
@@ -148,12 +107,31 @@ lsp.set_preferences({
     }
 })
 
-lsp.on_attach(on_attach)
+lsp.on_attach(function(_, bufnr)
+    lsp.default_keymaps({ buffer = bufnr })
+end)
+
 lsp.nvim_workspace()
 lsp.setup()
 
+local cmp = require("cmp")
+cmp.setup({
+    sources = {
+        { name = "nvim_lsp",               keyword_length = 3 },
+        { name = "nvim_lsp_signature_help" },
+        { name = "nvim_lua",               keyword_length = 2 },
+        { name = "buffer",                 keyword_length = 2 },
+        { name = "path" },
+        { name = "spell" },
+        { name = "vsnip" },
+        { name = "calc" },
+    }
+})
 vim.diagnostic.config({
     virtual_text = true,
+    signs = true,
+    underline = true,
+    update_in_insert = true
 })
 
 local rustlsp = lsp.build_options("rust_analyzer", {

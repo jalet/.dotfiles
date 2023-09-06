@@ -64,7 +64,8 @@ return packer.startup(function(use)
             { "hrsh7th/cmp-nvim-lua" },
             { "hrsh7th/cmp-buffer" },
             { "hrsh7th/cmp-path" },
-            { "hrsh7th/cmp-vsnip" },
+            { "hrsh7th/cmp-calc" },
+            { "f3fora/cmp-spell" },
 
             -- Other
             { "L3MON4D3/LuaSnip" },
@@ -85,33 +86,10 @@ return packer.startup(function(use)
     use({ "nvim-telescope/telescope.nvim", requires = { "nvim-lua/plenary.nvim" } })
     use("RRethy/nvim-align")
     use("mzlogin/vim-markdown-toc")
-    use({ "TimUntersberger/neogit", requires = "nvim-lua/plenary.nvim", "sindrets/diffview.nvim" })
+    use({ "NeogitOrg/neogit", requires = "nvim-lua/plenary.nvim", "sindrets/diffview.nvim" })
     use("mbbill/undotree")
-    use({
-        "nvim-tree/nvim-tree.lua",
-        requires = {
-            "nvim-tree/nvim-web-devicons", -- optional, for file icons
-        }
-    })
-    use({
-        "nvim-lualine/lualine.nvim",
-        requires = { "nvim-tree/nvim-web-devicons", opt = true }
-    })
-    use({
-        "KadoBOT/nvim-spotify",
-        requires = "nvim-telescope/telescope.nvim",
-        config = function()
-            require("nvim-spotify").setup {
-                -- default opts
-                status = {
-                    update_interval = 10000, -- the interval (ms) to check for what"s currently playing
-                    format = "%s %t by %a"   -- spotify-tui --format argument
-                }
-            }
-        end,
-        run = "make"
-    })
     use("junegunn/vim-easy-align")
+    use("mfussenegger/nvim-jdtls")
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins

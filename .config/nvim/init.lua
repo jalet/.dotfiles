@@ -1,11 +1,10 @@
+local foo = 1 + 1
 require "jj.001-options"
 require "jj.002-keymaps"
 require "jj.003-plugins"
 require "jj.004-colorscheme"
 require "jj.005-gitsigns"
 require "jj.006-lsp-installer"
-require "jj.007-nvimtree"
-require "jj.008-lualine"
 require "jj.009-neogit"
 require "jj.011-lsp"
 require "jj.012-treesitter"

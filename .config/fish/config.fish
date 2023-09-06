@@ -37,12 +37,12 @@ set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 gpgconf --launch gpg-agent
 
 set -gx AWS_SDK_LOAD_CONFIG true
-set -gx GLOBAL_AUTO_TFVARS ~/.config/terraform/payments.tfvars.json
 set -gx HOMEBREW_NO_ENV_HINTS 1
 set -gx XDG_CONFIG_HOME /Users/jjarsater/.config/
-set -gx SSH_AUTH_SOCK ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 set -gx NODE_TLS_REJECT_UNAUTHORIZED 0 # yamlls doesn't work otherwise
 set -gx APPLE_SSH_ADD_BEHAVIOR macos
+set -gx TF_PLUGIN_CACHE_DIR $HOME/.config/terraform/plugin-cache
+set -gx GLOBAL_AUTO_TFVARS $HOME/.config/terraform/payments.tfvars.json
 
 # -- ALIAS ---------------------------------------------------------------------
 

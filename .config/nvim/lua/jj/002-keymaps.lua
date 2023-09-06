@@ -75,17 +75,14 @@ fn("x", "<S-k>", ":m-2<cr>gv=gv")
 fn("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
 fn("n", "<leader>fb", "<cmd>Telescope buffers<cr>")
 fn("n", "<leader>fg", "<cmd>Telescope live_grep<cr>")
-fn("n", "<leader>ft", "<cmd>TodoTelescope<cr>")
 fn("n", "z=", "<cmd>Telescope spell_suggest<cr>")
 
 -- Misc ------------------------------------------------------------------------
 
 fn("n", "<leader>gg", "<cmd>lua require'neogit'.open()<cr>")
-fn("n", "<leader>e", ":NvimTreeToggle<cr>")
 
 -- DAP -------------------------------------------------------------------------
 
 fn("n", "<leader>dt", ":lua require'dap'.toggle_breakpoint()<cr>")
 fn("n", "<leader>dT", ":lua require'dap'.clear_breakpoints()<cr>")
 fn("n", "<leader>du", ":lua require'dapui'.toggle()<cr>")
-fn("n", "<leader>dc", ":Telescope dap commands<cr>")
