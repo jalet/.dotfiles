@@ -20,6 +20,7 @@ set.mouse          = "a"
 set.number         = true
 set.numberwidth    = 4
 set.pumheight      = 15
+set.foldmethod     = "indent"
 set.relativenumber = true
 set.scrolloff      = 16
 set.shiftwidth     = 4

@@ -15,23 +15,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("jj.core.plugins")
 
 -- -- Scaffolding
---
--- -- Colorschemes
---
--- -- Zero
--- use({
--- ,
--- requires = {
--- -- LSP
---
--- -- CMP
---
--- -- Other
--- { "L3MON4D3/LuaSnip" },
--- { "simrat39/rust-tools.nvim" },
--- }
--- })
---
 -- -- DAP and Testing
 -- use("mfussenegger/nvim-dap")
 -- use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
