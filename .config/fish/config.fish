@@ -24,6 +24,7 @@ starship init fish | source
 
 fish_add_path -g \
     /opt/homebrew/opt/curl/bin \
+    /opt/homebrew/opt/postgresql@15/bin \
     ~/.asdf/shims \
     ~/.local/share/nvim/mason/bin \
     ~/.cargo/bin

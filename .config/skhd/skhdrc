@@ -109,6 +109,7 @@ lctrl + alt - 0x59 : /Applications/Firefox.app/Contents/MacOS/firefox --new-tab 
 lctrl + alt - 0x5B : /Applications/Firefox.app/Contents/MacOS/firefox --new-tab "ext+container:name=Personal&url=about:blank"
 
 # focus window
+lctrl - f : yabai -m window --toggle zoom-fullscreen
 lctrl - h : yabai -m window --focus west
 lctrl - j : yabai -m window --focus south
 lctrl - k : yabai -m window --focus north

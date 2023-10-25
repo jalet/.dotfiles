@@ -21,6 +21,7 @@ set.number         = true
 set.numberwidth    = 4
 set.pumheight      = 15
 set.foldmethod     = "indent"
+set.foldenable     = false
 set.relativenumber = true
 set.scrolloff      = 16
 set.shiftwidth     = 4
