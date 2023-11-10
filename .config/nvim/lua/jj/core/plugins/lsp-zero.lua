@@ -18,10 +18,12 @@ return {
         -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
         lsp.preset("recommended")
         lsp.ensure_installed({
+            "biome",
             "dockerls",
             "graphql",
             "jedi_language_server",
             "jsonls",
+            "jqls",
             "kotlin_language_server",
             "lua_ls",
             "rust_analyzer",
@@ -46,8 +48,13 @@ return {
 
         lsp.configure("jsonls", {
             settings = {
-                http = {
-                    proxyStrictSSL = false
+                json = {
+                    schemas = {
+                        {
+                            fileMatch = {"taskdef.json"},
+                            url = "https://ecs-intellisense.s3-us-west-2.amazonaws.com/task-definition/schema.json"
+                        }
+                    }
                 }
             }
         })
@@ -71,7 +78,8 @@ return {
                     schemas = {
                         ["/Users/jjarsater/projects/payments-core/schemas/svcspec.json"] = {
                             "tools/release-artifacts/spec.yaml",
-                            "tools/release-artifacts/spec.yml" },
+                            "tools/release-artifacts/spec.yml",
+                        },
                         ["https://json.schemastore.org/github-workflow.json"] = { "/.github/workflows/*" },
                         ["https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json"] = {
                             "*/cloudformation/*",
