@@ -48,7 +48,6 @@ set -gx GLOBAL_AUTO_TFVARS $HOME/.config/terraform/payments.tfvars.json
 # -- ALIAS ---------------------------------------------------------------------
 
 alias cat="bat"
-alias n="nvim ."
 alias vim="nvim"
 alias dco="docker-compose"
 alias cfg="/opt/homebrew/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
