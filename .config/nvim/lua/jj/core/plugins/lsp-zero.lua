@@ -1,40 +1,24 @@
 return {
     "VonHeikemen/lsp-zero.nvim",
     config = function()
-        local mason = require("mason")
         local lsp = require("lsp-zero")
 
-        -- Configure Mason
-        mason.setup({
-            ui = {
-                icons = {
-                    package_installed = "✓",
-                    package_pending = "➜",
-                    package_uninstalled = "✗"
-                }
-            }
+        require('mason').setup({})
+        require('mason-lspconfig').setup({
+            -- Replace the language servers listed here 
+            -- with the ones you want to install
+            ensure_installed = {"jdtls", "rust_analyzer"},
+            handlers = {
+              lsp.default_setup,
+              lua_ls = function()
+                local lua_opts = lsp.nvim_lua_ls()
+                require('lspconfig').lua_ls.setup(lua_opts)
+              end,
+            },
         })
 
         -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
         lsp.preset("recommended")
-        lsp.ensure_installed({
-            "biome",
-            "dockerls",
-            "graphql",
-            "jedi_language_server",
-            "jsonls",
-            "jqls",
-            "kotlin_language_server",
-            "lua_ls",
-            "rust_analyzer",
-            "terraformls",
-            "tflint",
-            "tsserver",
-            "yamlls",
-        })
-
-        -- We'll use rust-tools to setup the rust-analyzer
-        lsp.skip_server_setup({ "rust_analyzer", "jdtls" })
 
         lsp.configure("lua_ls", {
             settings = {
@@ -115,7 +99,6 @@ return {
             lsp.default_keymaps({ buffer = bufnr })
         end)
 
-        lsp.nvim_workspace()
         lsp.setup()
 
         local cmp = require("cmp")

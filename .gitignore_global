@@ -57,3 +57,4 @@ bin/circleci-test-build
 .secrets
 spell/
 .factorypath
+.dotfiles

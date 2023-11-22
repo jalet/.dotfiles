@@ -8,8 +8,8 @@ end
 
 # -- homebrew ------------------------------------------------------------------
 
-/opt/homebrew/bin/brew shellenv | source
-source /Users/jjarsater/.config/op/plugins.sh
+# /opt/homebrew/bin/brew shellenv | source
+# source /Users/jjarsater/.config/op/plugins.sh
 
 # -- Colors --------------------------------------------------------------------
 
@@ -17,39 +17,29 @@ starship init fish | source
 
 # -- ASDF ----------------------------------------------------------------------
 
-. /opt/homebrew/opt/asdf/libexec/asdf.fish
-. ~/.asdf/plugins/java/set-java-home.fish
+# . /opt/homebrew/opt/asdf/libexec/asdf.fish
+# . ~/.asdf/plugins/java/set-java-home.fish
 
 # -- PATH ----------------------------------------------------------------------
 
-fish_add_path -g \
-    /opt/homebrew/opt/curl/bin \
-    /opt/homebrew/opt/postgresql@15/bin \
-    ~/.asdf/shims \
-    ~/.local/share/nvim/mason/bin \
-    ~/.cargo/bin
+fish_add_path -g ~/.local/share/nvim/mason/bin \
+    ~/.cargo/bin \
+    ~/.local/bin
 
 # -- ENV -----------------------------------------------------------------------
 
 set -gx LANG en_US.UTF-8
 set -gx EDITOR nvim
 set -gx GPG_TTY (tty)
-set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-gpgconf --launch gpg-agent
 
 set -gx AWS_SDK_LOAD_CONFIG true
-set -gx HOMEBREW_NO_ENV_HINTS 1
-set -gx XDG_CONFIG_HOME /Users/jjarsater/.config/
-set -gx NODE_TLS_REJECT_UNAUTHORIZED 0 # yamlls doesn't work otherwise
-set -gx APPLE_SSH_ADD_BEHAVIOR macos
-set -gx TF_PLUGIN_CACHE_DIR $HOME/.config/terraform/plugin-cache
-set -gx GLOBAL_AUTO_TFVARS $HOME/.config/terraform/payments.tfvars.json
+set -gx XDG_CONFIG_HOME $HOME/.config/
 
 # -- ALIAS ---------------------------------------------------------------------
 
 alias cat="bat"
 alias vim="nvim"
 alias dco="docker-compose"
-alias cfg="/opt/homebrew/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
+alias cfg="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
 alias tf="terraform"
 alias ls="exa"

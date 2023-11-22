@@ -1,7 +1,7 @@
 local set = vim.opt
 
 set.backup         = false
-set.ch             = 0
+-- set.ch             = 1
 set.clipboard      = "unnamedplus"
 set.cmdheight      = 2
 set.colorcolumn    = "+1"

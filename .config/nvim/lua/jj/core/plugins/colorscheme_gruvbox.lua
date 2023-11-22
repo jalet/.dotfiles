@@ -2,7 +2,7 @@ return {
     "morhetz/gruvbox",
     lazy = false,
     priority = 1000,
-    enabled = false,
+    enabled = true,
     config = function()
         vim.cmd.colorscheme("gruvbox")
         vim.api.nvim_set_hl(0, "Normal", { bg = "NONE", ctermbg = "NONE" })
