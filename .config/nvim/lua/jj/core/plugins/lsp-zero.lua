@@ -94,6 +94,11 @@ return {
             }
         })
 
+        lsp.configure("kotlin_language_server", {
+            settings = {
+                root_dir = { "settings.gradle", "settings.gradle.kts" }
+            }
+        })
 
         lsp.on_attach(function(_, bufnr)
             lsp.default_keymaps({ buffer = bufnr })
