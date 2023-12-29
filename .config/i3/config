@@ -201,8 +201,11 @@ client.unfocused        $bg $bg $bg $bg $bg
 client.urgent           $bg $bg $bg $bg $bg
 
 bindsym $mod+F2 exec /usr/bin/brave-browser-stable
+bindsym $mod+Prior exec --no-startup-id setxkbmap us
+bindsym $mod+Next exec --no-startup-id setxkbmap se 
 
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id picom -b --config $HOME/.config/picom/picom.conf
 exec_always --no-startup-id xrandr --output HDMI-2 --mode 2560x1440
 exec_always --no-startup-id feh --bg-fill $HOME/.config/wallpapers/montana-by-givesnofuck-wallpaper.jpg
+exec_always --no-startup-id unclutter -idle 0.5 -root

@@ -24,8 +24,8 @@ starship init fish | source
 
 fish_add_path -g ~/.local/share/nvim/mason/bin \
     ~/.cargo/bin \
-    ~/.local/bin
-
+    ~/.local/bin \
+    /usr/local/go/bin 
 # -- ENV -----------------------------------------------------------------------
 
 set -gx LANG en_US.UTF-8
